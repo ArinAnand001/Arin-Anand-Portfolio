@@ -176,7 +176,6 @@ export function Navbar({ ready }: { ready: boolean }) {
         role="dialog"
         aria-modal="true"
       >
-        <div className="menu__orbit" aria-hidden="true" />
         <nav aria-label="Mobile">
           <ul className="menu__links" role="list">
             {nav.map((item, i) => (

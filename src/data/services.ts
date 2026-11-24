@@ -26,7 +26,6 @@ export type ServiceVisualKind =
   | 'label'
   | 'motion'
   | 'web'
-  | 'ai'
   | 'uiux'
   | 'app'
   | 'software';
@@ -159,7 +158,7 @@ export const services: Service[] = [
     title: 'AI & Automation',
     description: 'AI tools and automated workflows that take the repetitive work off your plate.',
     deliverables: ['AI chatbots', 'Workflow automation', 'AI content tools'],
-    visual: 'ai',
+    visual: 'software',
     samples: [],
   },
   {

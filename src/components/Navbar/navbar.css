@@ -183,34 +183,11 @@
   justify-content: space-between;
   padding: calc(var(--nav-h) + 28px) var(--gutter) 32px;
   overflow-y: auto;
-  background:
-    radial-gradient(90% 60% at 100% 0%, rgb(103 38 201 / 0.25), transparent 65%),
-    #000;
+  background: #05030b;
   animation: menu-in 0.5s var(--ease-out);
 }
 .menu[hidden] {
   display: none;
-}
-.menu__orbit {
-  position: absolute;
-  top: 12%;
-  right: -30%;
-  width: 90vw;
-  height: 90vw;
-  border-radius: 50%;
-  border: 1px solid rgb(199 165 255 / 0.14);
-  pointer-events: none;
-}
-.menu__orbit::after {
-  content: '';
-  position: absolute;
-  top: 14%;
-  left: 14%;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--c-lavender);
-  box-shadow: 0 0 16px var(--c-electric);
 }
 .menu__links {
   display: grid;

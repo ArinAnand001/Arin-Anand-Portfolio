@@ -287,35 +287,6 @@ function renderKind(kind: ServiceVisualKind, reduced: boolean) {
           <rect className="sv-bar sv-bar--4" x="50" y="88" width="100" height="6" rx="3" />
         </g>
       );
-    case 'ai': {
-      const layers: Array<Array<[number, number]>> = [
-        [[48, 34], [48, 60], [48, 86]],
-        [[100, 24], [100, 48], [100, 72], [100, 96]],
-        [[152, 44], [152, 76]],
-      ];
-      const links: Array<[[number, number], [number, number]]> = [];
-      layers[0].forEach((a) => layers[1].forEach((b) => links.push([a, b])));
-      layers[1].forEach((a) => layers[2].forEach((b) => links.push([a, b])));
-      return (
-        <g>
-          {links.map(([a, b], i) => (
-            <path key={i} className="sv-synapse" d={`M${a[0]} ${a[1]} L${b[0]} ${b[1]}`} />
-          ))}
-          {[links[1], links[6], links[13], links[18]].map(([a, b], i) => (
-            <path
-              key={`s${i}`}
-              className="sv-signal"
-              d={`M${a[0]} ${a[1]} L${b[0]} ${b[1]}`}
-              pathLength={100}
-              style={{ animationDelay: `${i * 0.6}s` }}
-            />
-          ))}
-          {layers.flat().map(([x, y], i) => (
-            <circle key={`n${i}`} className="sv-node" cx={x} cy={y} r={i > 6 ? 7 : 5} fill={i > 6 ? orb : '#963CFF'} style={{ animationDelay: `${i * 0.2}s` }} />
-          ))}
-        </g>
-      );
-    }
     case 'uiux':
       return (
         <g>
