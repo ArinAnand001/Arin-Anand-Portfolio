@@ -35,8 +35,8 @@ export function Loader({ onDone }: { onDone: () => void }) {
     }
     lockScroll(true);
     const quick = introSeen();
-    const minTime = quick ? 650 : 1900;
-    const maxTime = 3600;
+    const minTime = quick ? 1600 : 3000;
+    const maxTime = 5200;
     const start = performance.now();
     let fontsReady = false;
     let shown = 0;
@@ -51,7 +51,7 @@ export function Loader({ onDone }: { onDone: () => void }) {
       const elapsed = now - start;
       const ready = (fontsReady && elapsed >= minTime) || elapsed >= maxTime;
       const target = ready ? 1 : Math.min(0.92, (elapsed / minTime) * 0.92);
-      shown += (target - shown) * (ready ? 0.16 : 0.08);
+      shown += (target - shown) * (ready ? 0.10 : 0.055);
       if (ready && 1 - shown < 0.004) shown = 1;
       if (bar.current) bar.current.style.transform = `scaleX(${shown.toFixed(4)})`;
       if (count.current) count.current.textContent = String(Math.round(shown * 100)).padStart(3, '0');
@@ -71,9 +71,9 @@ export function Loader({ onDone }: { onDone: () => void }) {
         window.setTimeout(() => {
           lockScroll(false);
           done.current();
-        }, 380),
+        }, 480),
       );
-      timers.push(window.setTimeout(() => setPhase('gone'), 1500));
+      timers.push(window.setTimeout(() => setPhase('gone'), 1800));
     };
     raf = requestAnimationFrame(frame);
 
