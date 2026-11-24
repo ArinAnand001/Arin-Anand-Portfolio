@@ -1,11 +1,22 @@
 import { useRef, type MouseEvent } from 'react';
 import { SplitText } from '../shared/SplitText';
 import { Button } from '../shared/Button';
+import { ErrorBoundary } from '../shared/ErrorBoundary';
 import { useScrollProgress } from '../../hooks/useReveal';
 import { useMotion } from '../../lib/motion';
 import { scrollToTarget } from '../../lib/scroll';
 import { cn } from '../../lib/utils';
+import { PlanetCanvas } from './PlanetCanvas';
+import { Ribbons } from './Ribbons';
+import type { PlanetLayout } from './planetRenderer';
 import './hero.css';
+
+/** Where the planet sits for a given hero size (CSS pixels). */
+function planetLayout(w: number, h: number): PlanetLayout {
+  if (w < 760) return { cx: w * 0.68, cy: h * 0.24, radius: Math.min(w * 0.25, h * 0.15) };
+  if (w < 1100) return { cx: w * 0.76, cy: h * 0.36, radius: Math.min(w * 0.19, h * 0.24) };
+  return { cx: w * 0.75, cy: h * 0.46, radius: Math.min(w * 0.17, h * 0.29) };
+}
 
 export function Hero({ ready }: { ready: boolean }) {
   const { reduced } = useMotion();
@@ -21,6 +32,14 @@ export function Hero({ ready }: { ready: boolean }) {
 
   return (
     <section id="home" ref={section} className={cn('hero', live && 'is-live')} aria-labelledby="hero-title">
+      <div className="hero__scene" aria-hidden="true">
+        <Ribbons />
+        <ErrorBoundary label="planet">
+          <PlanetCanvas ready={live} layout={planetLayout} />
+        </ErrorBoundary>
+      </div>
+      <div className="hero__scrim" aria-hidden="true" />
+
       <div className="hero__content container">
         <SplitText
           as="h1"
