@@ -1,0 +1,278 @@
+.hero {
+  --p: 0;
+  position: relative;
+  z-index: var(--z-content);
+  min-height: 100vh;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: calc(var(--nav-h) + 48px) 0 120px;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+/* ---------- Scene: ribbons + planet ---------- */
+.hero__scene {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  transform: translate3d(0, calc(var(--p) * 24vh), 0) scale(calc(1 + var(--p) * 0.12));
+  transform-origin: 75% 45%;
+  opacity: calc(1 - var(--p) * 0.85);
+  will-change: transform, opacity;
+}
+
+.planet {
+  position: absolute;
+  inset: 0;
+}
+.planet__canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* CSS planet used when WebGL is not available */
+.planet__fallback {
+  position: absolute;
+  translate: -50% -50%;
+  opacity: 0;
+  transition: opacity 2s var(--ease-out) 0.3s;
+}
+.hero.is-live .planet__fallback {
+  opacity: 1;
+}
+.planet__fallback-body {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 32% 28%, #e6d6ff 0%, #a466ff 18%, #6726c9 42%, #2a1260 68%, #0b0618 92%),
+    repeating-linear-gradient(-16deg, rgb(255 255 255 / 0.06) 0 6px, transparent 6px 18px);
+  background-blend-mode: soft-light;
+  box-shadow:
+    0 0 60px rgb(150 60 255 / 0.55),
+    0 0 160px rgb(103 38 201 / 0.35),
+    inset -30px -20px 60px rgb(5 3 11 / 0.8);
+}
+.planet__fallback-ring {
+  position: absolute;
+  left: -70%;
+  top: 30%;
+  width: 240%;
+  height: 40%;
+  border-radius: 50%;
+  border: 0.9vmin solid rgb(199 165 255 / 0.5);
+  rotate: -18deg;
+}
+.planet__fallback-ring--back {
+  clip-path: inset(0 0 50% 0);
+  opacity: 0.6;
+}
+.planet__fallback-ring--front {
+  clip-path: inset(50% 0 0 0);
+}
+
+/* ---------- Ribbons ---------- */
+.ribbons {
+  position: absolute;
+  inset: -4%;
+  width: 108%;
+  height: 108%;
+  overflow: visible;
+  opacity: 0;
+  transition: opacity 2.4s var(--ease-out) 0.6s;
+}
+.hero.is-live .ribbons {
+  opacity: 1;
+}
+.ribbon path {
+  fill: none;
+  stroke-linecap: round;
+}
+.ribbon__haze {
+  opacity: 0.05;
+}
+.ribbon__band {
+  opacity: 0.08;
+}
+.ribbon__edge {
+  opacity: 0.55;
+}
+.ribbon__spark {
+  stroke-dasharray: 70 1000;
+  stroke-dashoffset: 1070;
+  opacity: 0.9;
+  filter: drop-shadow(0 0 6px #c7a5ff);
+  animation: ribbon-flow 7s cubic-bezier(0.45, 0, 0.25, 1) infinite;
+}
+.ribbon--1 .ribbon__spark {
+  animation-duration: 9s;
+  animation-delay: -3s;
+}
+.ribbon--2 .ribbon__spark {
+  animation-duration: 11s;
+  animation-delay: -6s;
+}
+.ribbon--1 {
+  opacity: 0.7;
+}
+.ribbon--2 {
+  opacity: 0.55;
+}
+@keyframes ribbon-flow {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* Keeps text readable where it overlaps the planet's rings */
+.hero__scrim {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: linear-gradient(90deg, rgb(0 0 0 / 0.72) 0%, rgb(0 0 0 / 0.4) 38%, transparent 62%);
+}
+
+/* ---------- Content ---------- */
+.hero__content {
+  position: relative;
+  display: grid;
+  justify-items: start;
+  gap: 28px;
+  transform: translate3d(0, calc(var(--p) * -90px), 0);
+  opacity: calc(1 - var(--p) * 1.5);
+}
+
+.hero__eyebrow {
+  font-size: var(--step--1);
+  font-weight: 520;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--c-lavender);
+}
+
+.hero__title {
+  max-width: 17ch;
+  font-weight: 300;
+  font-size: clamp(2.45rem, 1rem + 4.1vw, 4.9rem);
+  line-height: 1.08;
+  letter-spacing: 0;
+  text-shadow: 0 2px 40px rgb(5 3 11 / 0.55);
+}
+.hero__title .split__line {
+  white-space: nowrap;
+}
+
+.hero__lede {
+  max-width: 50ch;
+  font-size: var(--step-1);
+  line-height: 1.6;
+  color: var(--text-muted);
+}
+
+.hero__ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 8px;
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 1s var(--ease-out) 1.75s,
+    transform 1.2s var(--ease-out) 1.75s;
+}
+.hero.is-live .hero__ctas {
+  opacity: 1;
+  transform: none;
+}
+
+/* ---------- Scroll cue ---------- */
+.hero__cue {
+  position: absolute;
+  left: var(--gutter);
+  bottom: 36px;
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  font-size: var(--step--1);
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  color: var(--text-faint);
+  opacity: 0;
+  transition: opacity 1.4s var(--ease-out) 2.3s, color 0.3s;
+}
+.hero.is-live .hero__cue {
+  opacity: 1;
+}
+.hero__cue:hover {
+  color: var(--c-white);
+}
+.hero__cue-line {
+  position: relative;
+  width: 1px;
+  height: 46px;
+  overflow: hidden;
+  background: rgb(199 165 255 / 0.18);
+}
+.hero__cue-line::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent, var(--c-lavender));
+  animation: cue-drop 2.2s var(--ease-in-out) infinite;
+}
+@keyframes cue-drop {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(100%);
+  }
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1100px) {
+  .hero__scrim {
+    background: linear-gradient(90deg, rgb(5 3 11 / 0.75), rgb(5 3 11 / 0.3) 70%, transparent);
+  }
+}
+@media (max-width: 760px) {
+  .hero {
+    justify-content: flex-end;
+    padding-top: calc(var(--nav-h) + 30vh);
+    padding-bottom: 110px;
+  }
+  .hero__scrim {
+    background: linear-gradient(180deg, transparent 18%, rgb(5 3 11 / 0.55) 42%, rgb(5 3 11 / 0.2) 100%);
+  }
+  .hero__content {
+    gap: 22px;
+  }
+  .hero__title {
+    font-size: clamp(2.3rem, 0.9rem + 7.4vw, 3.4rem);
+  }
+  .hero__title .split__line {
+    white-space: normal;
+  }
+  .hero__eyebrow {
+    letter-spacing: 0.18em;
+    line-height: 1.8;
+  }
+  .hero__cue {
+    bottom: 26px;
+  }
+}
+
+html[data-motion='reduced'] .hero__scene,
+html[data-motion='reduced'] .hero__content {
+  transform: none;
+  opacity: 1;
+}
+html[data-motion='reduced'] .ribbon__spark {
+  animation: none;
+  opacity: 0;
+}

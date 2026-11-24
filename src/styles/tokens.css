@@ -1,0 +1,86 @@
+/* ------------------------------------------------------------------
+   Design tokens - midnight purple identity
+   Change colours, type and spacing here; every component reads them.
+------------------------------------------------------------------- */
+:root {
+  /* Palette */
+  --c-midnight: #05030b;
+  --c-deep: #0b0618;
+  --c-violet-dark: #160b2c;
+  --c-royal: #6726c9;
+  --c-electric: #963cff;
+  --c-lavender: #c7a5ff;
+  --c-white: #f5f1ff;
+
+  /* Semantic colour */
+  /* Page background: true deep-space black */
+  --bg: #000000;
+  --text: var(--c-white);
+  --text-muted: rgb(245 241 255 / 0.68);
+  --text-faint: rgb(245 241 255 / 0.44);
+  --accent: var(--c-electric);
+  --accent-soft: var(--c-lavender);
+  --line: rgb(199 165 255 / 0.13);
+  --line-strong: rgb(199 165 255 / 0.3);
+  --glass: rgb(22 11 44 / 0.42);
+  --glass-strong: rgb(11 6 24 / 0.78);
+  --glow-electric: 0 0 24px rgb(150 60 255 / 0.45), 0 0 64px rgb(103 38 201 / 0.3);
+  --glow-soft: 0 0 40px rgb(150 60 255 / 0.18);
+
+  /* Typography - Alice for display and headings, Lora for reading.
+     Alice has a single weight, so headings stay at 400 and get their
+     presence from size and spacing rather than boldness. */
+  --font-display: 'Alice', 'Lora', Georgia, 'Times New Roman', serif;
+  --font-body: 'Lora', Georgia, 'Times New Roman', serif;
+  --font: var(--font-body);
+
+  /* Modular scale, ratio 1.333 (perfect fourth) */
+  --step--2: 0.703rem;
+  --step--1: 0.844rem;
+  --step-0: 1.0625rem;
+  --step-1: clamp(1.2rem, 1.1rem + 0.4vw, 1.417rem);
+  --step-2: clamp(1.5rem, 1.3rem + 0.8vw, 1.889rem);
+  --step-3: clamp(1.9rem, 1.5rem + 1.6vw, 2.519rem);
+  --step-4: clamp(2.3rem, 1.6rem + 2.8vw, 3.358rem);
+  --step-5: clamp(2.6rem, 1.5rem + 4.6vw, 4.477rem);
+  --step-6: clamp(2.7rem, 1.2rem + 6.2vw, 5.97rem);
+
+  --leading-tight: 1.08;
+  --leading-snug: 1.2;
+  --leading-body: 1.62;
+
+  /* Space */
+  --gutter: clamp(20px, 5vw, 72px);
+  --container: 1320px;
+  --section-pad: clamp(96px, 14vw, 190px);
+  --nav-h: 76px;
+
+  /* Shape - radius follows hierarchy: portals > panels > cards > controls */
+  --r-portal: 36px;
+  --r-panel: 28px;
+  --r-card: 20px;
+  --r-control: 14px;
+  --r-pill: 999px;
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --dur-fast: 0.25s;
+  --dur: 0.6s;
+  --dur-slow: 1.2s;
+
+  /* Layers */
+  --z-bg: 0;
+  --z-content: 2;
+  --z-nav: 50;
+  --z-modal: 80;
+  --z-cursor: 100;
+  --z-loader: 120;
+}
+
+@media (max-width: 720px) {
+  :root {
+    --nav-h: 64px;
+  }
+}
