@@ -1,0 +1,100 @@
+.cursor {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-cursor);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.cursor.is-visible {
+  opacity: 1;
+}
+
+.cursor__dot,
+.cursor__ring {
+  position: absolute;
+  top: 0;
+  left: 0;
+  will-change: transform;
+}
+
+.cursor__dot {
+  width: 6px;
+  height: 6px;
+  margin: -3px 0 0 -3px;
+  border-radius: 50%;
+  background: var(--c-white);
+  box-shadow:
+    0 0 10px rgb(199 165 255 / 0.9),
+    0 0 24px rgb(150 60 255 / 0.6);
+  transition: opacity 0.2s, scale 0.3s var(--ease-out);
+}
+
+.cursor__ring-shape {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 36px;
+  height: 36px;
+  translate: -50% -50%;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  border: 1px solid rgb(199 165 255 / 0.55);
+  background: rgb(150 60 255 / 0);
+  transition:
+    width 0.45s var(--ease-out),
+    height 0.45s var(--ease-out),
+    background-color 0.35s,
+    border-color 0.35s,
+    opacity 0.25s,
+    scale 0.25s var(--ease-out);
+}
+
+.cursor__label {
+  font-size: 0.78rem;
+  font-weight: 560;
+  letter-spacing: 0.02em;
+  color: var(--c-white);
+  opacity: 0;
+  transform: scale(0.6);
+  transition: opacity 0.3s, transform 0.4s var(--ease-out);
+  white-space: nowrap;
+}
+
+/* Over links and buttons */
+.cursor[data-state='hover'] .cursor__ring-shape {
+  width: 58px;
+  height: 58px;
+  border-color: rgb(199 165 255 / 0.8);
+  background: rgb(150 60 255 / 0.12);
+}
+.cursor[data-state='hover'] .cursor__dot {
+  scale: 0.6;
+}
+
+/* Over elements with a data-cursor label, e.g. project cards */
+.cursor[data-state='label'] .cursor__ring-shape {
+  width: 92px;
+  height: 92px;
+  border-color: transparent;
+  background: linear-gradient(135deg, rgb(150 60 255 / 0.92), rgb(103 38 201 / 0.92));
+  box-shadow: 0 0 40px rgb(150 60 255 / 0.55);
+}
+.cursor[data-state='label'] .cursor__label {
+  opacity: 1;
+  transform: none;
+}
+.cursor[data-state='label'] .cursor__dot {
+  opacity: 0;
+}
+
+/* Over text fields: get out of the way, the native caret takes over */
+.cursor[data-state='text'] .cursor__ring-shape,
+.cursor[data-state='text'] .cursor__dot {
+  opacity: 0;
+}
+
+.cursor.is-down .cursor__ring-shape {
+  scale: 0.82;
+}
