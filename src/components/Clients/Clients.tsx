@@ -63,7 +63,6 @@ export function Clients() {
   const total = companiesCount > 0 ? companiesCount : clients.length;
   const plus = companiesCount > 0 && companiesCount > clients.length;
   const marquee = clients.length >= 6;
-  const rows = marquee ? [clients.filter((_, i) => i % 2 === 0), clients.filter((_, i) => i % 2 === 1)] : [clients];
 
   return (
     <section id="clients" className="section clients" aria-labelledby="clients-title">
@@ -110,24 +109,22 @@ export function Clients() {
             ))}
           </div>
         ) : marquee ? (
-          rows.map((row, r) => (
-            <div key={r} className={cn('clients__marquee', r === 1 && 'clients__marquee--rev')}>
-              {[0, 1].map((copy) => (
-                <ul key={copy} className="clients__track" role="list" aria-hidden={copy === 1 || undefined}>
-                  {row.map((c) => (
-                    <li key={c.name}>
-                      <Logo client={c} />
-                    </li>
-                  ))}
-                </ul>
-              ))}
-            </div>
-          ))
+          <div className="clients__marquee">
+            {[0, 1].map((copy) => (
+              <ul key={copy} className="clients__track" role="list" aria-hidden={copy === 1 || undefined}>
+                {clients.map((client) => (
+                  <li key={client.name}>
+                    <Logo client={client} />
+                  </li>
+                ))}
+              </ul>
+            ))}
+          </div>
         ) : (
           <ul className="container clients__grid" role="list">
-            {clients.map((c, i) => (
-              <li key={c.name} style={{ '--i': i } as CSSProperties}>
-                <Logo client={c} />
+            {clients.map((client, i) => (
+              <li key={client.name} style={{ '--i': i } as CSSProperties}>
+                <Logo client={client} />
               </li>
             ))}
           </ul>
