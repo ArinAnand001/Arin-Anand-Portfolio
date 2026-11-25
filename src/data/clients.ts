@@ -1,25 +1,24 @@
 /**
  * Companies you've worked with, shown after "How I work".
- *
- * Put logo files in /public/clients/ (SVG or transparent PNG/WebP work best) and add one entry each:
- *   { name: 'Vijaya Grand', logo: 'clients/vijaya-grand.png' },
- *   { name: 'Acme Studio', logo: 'clients/acme.svg', href: 'https://acme.example' },
- *   { name: 'Company without a logo file' },          // shown as a text logo
- *
- * Logos are shown as white silhouettes so every brand sits evenly on the dark background,
- * and light up in full colour on hover. Set `keepColors: true` for a logo that needs its own colours
- * all the time (for example one that sits on its own coloured badge).
+ * The logo assets are stored in the repository's "Client's Logo" folder.
+ * They are loaded from GitHub's raw asset endpoint so the source files stay unchanged.
  */
 export interface ClientLogo {
   name: string;
-  /** Path in /public, e.g. 'clients/acme.svg'. Leave out to show the name as a text logo. */
+  /** Absolute image URL or path in /public. */
   logo?: string;
   /** Optional link to the company's site. */
   href?: string;
   keepColors?: boolean;
 }
 
-export const clients: ClientLogo[] = [];
+const logoBase =
+  "https://raw.githubusercontent.com/ArinAnand001/Arin-Anand-Portfolio/main/Client%27s%20Logo/";
+
+export const clients: ClientLogo[] = Array.from({ length: 10 }, (_, index) => ({
+  name: `Client ${index + 1}`,
+  logo: `${logoBase}${index + 1}.png`,
+}));
 
 /**
  * The headline number, e.g. 25 shows "25+ companies".
