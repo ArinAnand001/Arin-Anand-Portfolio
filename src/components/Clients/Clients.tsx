@@ -1,34 +1,9 @@
-import { useRef, useState, type CSSProperties } from 'react';
-import { clients, companiesCount, companiesLabel, type ClientLogo } from '../../data/clients';
+import { useState, type CSSProperties } from 'react';
+import { clients, type ClientLogo } from '../../data/clients';
 import { useReveal } from '../../hooks/useReveal';
-import { useMotion } from '../../lib/motion';
 import { asset, cn, isFilled } from '../../lib/utils';
 import { SplitText } from '../shared/SplitText';
 import './clients.css';
-
-/** Counts up to `to` once the number scrolls into view. */
-function Counter({ to }: { to: number }) {
-  const { reduced } = useMotion();
-  const [value, setValue] = useState(reduced ? to : 0);
-  const started = useRef(false);
-  const ref = useReveal<HTMLSpanElement>(() => {
-    if (started.current || reduced) return;
-    started.current = true;
-    const start = performance.now();
-    const duration = 1800;
-    const frame = (now: number) => {
-      const k = Math.min(1, (now - start) / duration);
-      setValue(Math.round(to * (1 - Math.pow(1 - k, 4))));
-      if (k < 1) requestAnimationFrame(frame);
-    };
-    requestAnimationFrame(frame);
-  });
-  return (
-    <span ref={ref} className="clients__number" aria-hidden="true">
-      {value}
-    </span>
-  );
-}
 
 function Logo({ client }: { client: ClientLogo }) {
   const [failed, setFailed] = useState(false);
@@ -58,10 +33,7 @@ function Logo({ client }: { client: ClientLogo }) {
 
 export function Clients() {
   const kicker = useReveal<HTMLParagraphElement>();
-  const stat = useReveal<HTMLDivElement>();
   const wall = useReveal<HTMLDivElement>();
-  const total = companiesCount > 0 ? companiesCount : clients.length;
-  const plus = companiesCount > 0 && companiesCount > clients.length;
   const marquee = clients.length >= 6;
 
   return (
@@ -73,27 +45,6 @@ export function Clients() {
               Clients
             </p>
             <SplitText as="h2" id="clients-title" className="heading" text="Companies I've worked with" mode="words" />
-          </div>
-
-          <div className="clients__stat" data-reveal ref={stat}>
-            {total > 0 ? (
-              <>
-                <p className="sr-only">
-                  {total}
-                  {plus ? '+' : ''} {companiesLabel}
-                </p>
-                {/* Kept separate from the screen-reader text: a gradient clipped to text would paint that too */}
-                <p className="clients__count" aria-hidden="true">
-                  <Counter to={total} />
-                  {plus && <span className="clients__plus">+</span>}
-                </p>
-                <p className="clients__label" aria-hidden="true">
-                  {companiesLabel}
-                </p>
-              </>
-            ) : (
-              <p className="clients__label">Company logos are being added.</p>
-            )}
           </div>
         </div>
       </div>
