@@ -94,7 +94,7 @@ export function Loader({ onDone }: { onDone: () => void }) {
         <p className="loader__name">
           {Array.from('Arin Anand').map((ch, i) => (
             <span key={i} style={{ '--i': i } as CSSProperties}>
-              {ch === ' ' ? '\\u00a0' : ch}
+              {ch === ' ' ? '\u00a0' : ch}
             </span>
           ))}
         </p>
